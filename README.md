@@ -1,8 +1,11 @@
-# Reactor Netty Leak Detection
+# Reactor Netty ByteBuf Leak
 
-### Reproducing
+This application is leaking `ByteBuf` instances, which of course shouldn't happen. Netty's resource leak detector is enabled on the 'PARANOID' level to show this is happening.
 
-- Run the main with `-Dio.netty.leakDetection.level=PARANOID` argument
-- Use Apache benchmark to query the /json endpoint
+To reproduce:
 
-``` ab -n 100 -c 1  http://localhost:8080/json```
+    ./gradlew test
+    
+The log output will contain messages like these:
+
+    2017-07-03 14:14:42.234 ERROR 6609 --- [ntLoopGroup-2-7] io.netty.util.ResourceLeakDetector       : LEAK: ByteBuf.release() was not called before it's garbage-collected. See http://netty.io/wiki/reference-counted-objects.html for more information.
