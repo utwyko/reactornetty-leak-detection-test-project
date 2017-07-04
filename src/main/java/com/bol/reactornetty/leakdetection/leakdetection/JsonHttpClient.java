@@ -7,8 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.ipc.netty.http.client.HttpClient;
-import rx.Observable;
-import rx.RxReactiveStreams;
 
 import java.time.Duration;
 
@@ -21,13 +19,11 @@ public class JsonHttpClient {
             ops
                     .connect("jsonplaceholder.typicode.com", 80));
 
-    public Observable<String> getString() {
-        final Mono<String> monoResponse = httpClient.get("/posts", request ->
+    public Mono<String> getString() {
+        return httpClient.get("/posts", request ->
                 request
                         .addHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE))
                 .then(response -> response.receive().aggregate().asString())
                 .timeout(Duration.ofMillis(80));
-
-        return RxReactiveStreams.toObservable(monoResponse);
     }
 }
