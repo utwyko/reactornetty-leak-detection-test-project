@@ -1,7 +1,7 @@
 buildscript {
 	ext {
 		springBootVersion = '1.5.4.RELEASE'
-		springReactorVersion = 'Aluminium-SR3'
+		springReactorVersion = 'Bismuth-M3'
 		springCloudVersion = 'Dalston.SR1'
 	}
 	repositories {
@@ -22,6 +22,7 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+	maven { url "http://repo.spring.io/milestone" }
 }
 
 dependencyManagement {

@@ -16,14 +16,13 @@ public class JsonHttpClient {
     private static final Logger log = LoggerFactory.getLogger(JsonHttpClient.class);
 
     private static final HttpClient httpClient = HttpClient.create(ops ->
-            ops
-                    .connect("jsonplaceholder.typicode.com", 80));
+            ops.host("jsonplaceholder.typicode.com").port(80));
 
     public Mono<String> getString() {
         return httpClient.get("/posts", request ->
                 request
                         .addHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE))
-                .then(response -> response.receive().aggregate().asString())
+                .flatMap(response -> response.receive().aggregate().asString())
                 .timeout(Duration.ofMillis(80));
     }
 }
