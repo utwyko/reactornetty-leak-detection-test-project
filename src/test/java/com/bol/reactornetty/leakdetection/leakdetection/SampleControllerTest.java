@@ -16,7 +16,7 @@ public class SampleControllerTest {
 
     @Test
     public void showByteBufLeak() {
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 250; i++) {
             restTemplate.getForEntity("/json", String.class);
         }
     }
