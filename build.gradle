@@ -23,6 +23,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 	maven { url "http://repo.spring.io/milestone" }
 	maven { url "http://repo.spring.io/libs-snapshot" }
@@ -40,6 +41,7 @@ dependencies {
 
 	compile 'io.projectreactor:reactor-core'
 	compile 'io.projectreactor.ipc:reactor-netty'
+	// compile 'io.projectreactor.ipc:reactor-netty:0.7.0.BUILD-SNAPSHOT'
 }
 
 test {
