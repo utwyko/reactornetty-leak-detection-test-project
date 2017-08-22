@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.0.BUILD-SNAPSHOT'
+		springBootVersion = '1.5.6.RELEASE'
 		springReactorVersion = 'Bismuth-M3'
 		springCloudVersion = 'Dalston.SR1'
 	}
@@ -37,11 +37,10 @@ dependencyManagement {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 
-	compile 'io.projectreactor:reactor-core:3.1.0.BUILD-SNAPSHOT'
-	compile 'io.projectreactor.ipc:reactor-netty:0.7.0.BUILD-SNAPSHOT'
-	compile 'io.projectreactor.ipc:reactor-ipc:0.7.0.BUILD-SNAPSHOT'
+    compile 'io.projectreactor:reactor-core:3.0.7.RELEASE'
+	compile 'org.asynchttpclient:async-http-client-extras-rxjava:2.0.34'
 }
 
 test {

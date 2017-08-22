@@ -1,28 +1,27 @@
 package com.bol.reactornetty.leakdetection.leakdetection;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.DefaultAsyncHttpClient;
+import org.asynchttpclient.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import reactor.ipc.netty.http.client.HttpClient;
 
 import java.time.Duration;
+
+import static com.bol.reactornetty.leakdetection.leakdetection.AsyncHttpMono.toMono;
 
 @Component
 public class JsonHttpClient {
 
-    private static final Logger log = LoggerFactory.getLogger(JsonHttpClient.class);
-
-    private static final HttpClient httpClient = HttpClient.create(ops ->
-            ops.host("jsonplaceholder.typicode.com").port(80));
+    private static final AsyncHttpClient httpClient = new DefaultAsyncHttpClient();
 
     public Mono<String> getString() {
-        return httpClient.get("/posts", request ->
-                request
-                        .addHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE))
-                .flatMap(response -> response.receive().aggregate().asString())
+        return toMono(() -> httpClient
+                .prepareGet("http://jsonplaceholder.typicode.com/posts")
+                .setHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE))
+                .map(Response::getResponseBody)
                 .timeout(Duration.ofMillis(30));
     }
 }
