@@ -23,6 +23,6 @@ public class JsonHttpClient {
                 request
                         .addHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE))
                 .flatMap(response -> response.receive().aggregate().asString())
-                .timeout(Duration.ofMillis(80));
+                .timeout(Duration.ofMillis(30));
     }
 }
